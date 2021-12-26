@@ -1,5 +1,6 @@
 package com.example.mindBlowProject.entities;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Column;
@@ -7,15 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
 
-@Entity
+
 @Document(collection = "comments")
+@TypeAlias("comment")
 public class Comment {
     @Id
     @Column(name = "id", nullable = false)
-    private Long id;
+    private String id;
 
     private String text;
     private Date date;
+
+    private User user;
 
     public Comment(){}
 
@@ -24,12 +28,20 @@ public class Comment {
         this.date = date;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getText() {

@@ -1,16 +1,20 @@
 package com.example.mindBlowProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.mail.Address;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.xml.stream.events.Comment;
 import java.util.List;
 
-@Entity
+
 @Document(collection = "users")
+@TypeAlias("user")
 public class User {
 
     @Id
@@ -20,10 +24,11 @@ public class User {
     private String lastName;
 
     @DBRef
-
+    @JsonManagedReference
     private List<Address> addressList;
 
     @DBRef
+    @JsonManagedReference
     private List<Comment> commentList;
 
     public User(){}

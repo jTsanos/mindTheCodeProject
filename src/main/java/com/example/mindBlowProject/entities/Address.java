@@ -1,20 +1,25 @@
 package com.example.mindBlowProject.entities;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.List;
 
-@Entity
+
 @Document(collection = "addresses")
+@TypeAlias("address")
 public class Address {
     @Id
     @Column(name = "id", nullable = false)
-    private Long id;
+    private String id;
 
     private String street;
     private String postalCode;
+
+    private List<User> users;
 
     public Address(){
 
@@ -25,11 +30,19 @@ public class Address {
         this.postalCode = postalCode;
     }
 
-    public Long getId() {
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
