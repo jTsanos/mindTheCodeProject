@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Document(collection = "users")
-public abstract class User {
+public class User {
 
     @Id
     private String id;
