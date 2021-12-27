@@ -3,17 +3,16 @@ package com.example.mindBlowProject.entities;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import org.springframework.data.annotation.Id;
 import java.util.Date;
 
 
 @Document(collection = "comments")
 @TypeAlias("comment")
 public class Comment {
+
     @Id
-    @Column(name = "id", nullable = false)
     private String id;
 
     private String text;

@@ -1,4 +1,4 @@
-package com.example.mindBlowProject.Controllers.api;
+package com.example.mindBlowProject.entities.api;
 
 import com.example.mindBlowProject.Repositories.CommentRepository;
 import com.example.mindBlowProject.entities.Address;
@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class CommentController {
 
     private final CommentRepository repository;
 
-    public CommentController(CommentRepository repository) {
+     CommentController(CommentRepository repository) {
         this.repository = repository;
     }
 
@@ -22,14 +23,14 @@ public class CommentController {
 
     @GetMapping("/api/comments/{id}")
     Comment GetComments(@PathVariable("id") String id) {
-        return repository.findById(Long.valueOf(id))
+        return repository.findById("id")
                 .orElseThrow(() -> new RuntimeException("Cannot find comment with id " + id));
     }
 
     @PutMapping("/api/comments/{id}")
     Comment updateComment(@RequestBody Comment newComment, @PathVariable String id) {
 
-        return repository.findById(Long.valueOf(id))
+        return repository.findById("id")
                 .map(match -> {
                     match.setDate(newComment.getDate());
                     match.setText(newComment.getText());
@@ -48,6 +49,6 @@ public class CommentController {
 
     @DeleteMapping("/api/comments/{id}")
     void deleteCar(@PathVariable String id) {
-        repository.deleteById(Long.valueOf(id));
+        repository.deleteById("id");
     }
 }

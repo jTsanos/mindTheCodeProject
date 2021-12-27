@@ -1,11 +1,11 @@
 package com.example.mindBlowProject.Repositories;
 
 import com.example.mindBlowProject.entities.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserRepository extends MongoRepository<User, String> {
 
-    public List<User> findUserStartingWith(String startsWith);
+    // List<User> findUserStartingWith(String startsWith);
 }
