@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface AddressRepository extends MongoRepository<Address, String> {
 
+    List<Address> findByStreet(String addressName);
+
 
 }
