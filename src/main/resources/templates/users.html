@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
+<head th:include="fragments/layout :: head(~{:: title})">
+    <title>Welcome</title>
+</head>
+<body>
+
+<!--/* The element with breadcrumb class will be passed to the header fragment */-->
+<header th:replace="fragments/layout :: header(~{ :: .breadcrumb})">
+    <ol class="breadcrumb container">
+        <li>
+            <a th:href="@{/}">Home</a>
+        </li>
+        /
+        <li>
+            <a th:href="@{/users}">Users</a>
+        </li>
+    </ol>
+</header>
+
+
+<!--/* Insert content fragment with content of the element with id = 'cars-list' */-->
+
+
+<div th:replace="fragments/layout :: content(value = ~{:: #user-list})">
+
+
+
+    <div id="user-list" class="row" >
+        <div class="col-md-12" th:switch="${users.totalElements}">
+            <h2 th:case="0">No users!</h2>
+            <div th:case="*" >
+                <h2>Users</h2>
+
+                <form th:action="@{/users}" th:object="${searchFirstName}" method="post" class="form-inline">
+
+                    <input class="form-control mr-sm-2" th:field="*{firstName}"  type="search" placeholder="Search by Firstname" aria-label="Search" />
+
+                </form>
+
+
+                <table class="table">
+                    <thead>
+                   <tr>
+                     <!--<th># <a class="col-md-2" th:href="@{/cars/electric/addcar}">Add</a></th>-->
+                        <th>User ID</th>
+                        <th>User First Name</th>
+                        <th>User Last Name</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users.iterator()}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.firstName}"></td>
+                        <td th:text="${user.lastName}"></td>
+                        <!-- <td th:object="${user.addressList}"></td>
+                          <td th:text="${user.commentList}"></td> -->
+                        <td><a th:href="@{/users/update/{id}(id=${user.id})}">Edit</a></td>
+                        <td><a th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+<!--
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <div class="page-link" style="color: black" th:text="'Total Users:' + ${users.totalElements}"></div>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link"
+                               th:style="${users.hasPrevious ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
+                               th:href="@{/users/FirstName(size=${users.size}, page=${page - 1})}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+
+
+                        <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                            <a class="page-link"
+                               th:style="${pageNumber == page ? 'background:#c7c7c7;' : 'background:initial;'}"
+                               th:href="@{/user(size=${users.size}, page=${pageNumber}, searchByName=${searchFirstName})}"
+                               th:text="${pageNumber}"></a>
+                        </li>
+
+
+                        <li class="page-item">
+                            <a class="page-link"
+                               th:style="${users.hasNext ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
+                               th:href="@{/users/AdressName(size=${users.size}, page=${page + 1}, searchByAdress=${searchFirstName})}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                -->
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<footer th:replace="fragments/layout :: footer">Footer</footer>
+</body>
+</html>

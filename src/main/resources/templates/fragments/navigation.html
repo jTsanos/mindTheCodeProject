@@ -17,7 +17,10 @@
                     <a class="nav-link" th:classappend="${#request.requestURI.equals('/') ? 'active':''}" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${#request.requestURI.startsWith('/cars') ? 'active':''}" href="/comments">Comments</a>
+                    <a class="nav-link" th:classappend="${#request.requestURI.startsWith('/users') ? 'active':''}" href="/users">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${#request.requestURI.startsWith('/comments') ? 'active':''}" href="/comments">Comments</a>
                 </li>
 
                 <li th:if="${#request.isUserInRole('USER')}" class="nav-item">

@@ -16,18 +16,16 @@ public class UserController {
     }
 
    @GetMapping(value = "/api/users")
-    List<User> GetUsers(){
+    List<User> GetUsers(
+         @RequestParam(name = "searchByName", required = false) String searchByName
+    ) {
+
+       if (searchByName != null) {
+           return repository.findAllByFirstName(searchByName);
+       }
        return repository.findAll();
+
    }
-           // @RequestParam(name = "userStartsWith", required = false) String userStartsWith
-   // ) {
-
-        //if (userStartsWith != null && userStartsWith != "") {
-         //  return repository.findUserStartingWith(userStartsWith);
-       // }
-     //   return repository.findAll();
-
-
     @GetMapping("/api/users/{id}")
     User GetUser(@PathVariable("id") String id) {
         return repository.findById(id)

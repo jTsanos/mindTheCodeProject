@@ -1,6 +1,8 @@
 package com.example.mindBlowProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -17,7 +19,8 @@ public class Address {
 
     private String street;
     private String postalCode;
-
+@DBRef
+@JsonManagedReference
     private List<User> users;
 
     public Address(){

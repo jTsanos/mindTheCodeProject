@@ -42,12 +42,12 @@ public class UserWebController {
                 @RequestParam(defaultValue = "") String searchFirstName
         ) {
             if (page < 1) {
-                return new RedirectView("/users?page=1&size="+ size);
+                return "redirect:/users?page=1&size="+ size;
             };
 
             Page<User> users = findPaginated(
                     !searchFirstName.equals("") ?
-                            repository.findByFirstName(searchFirstName) :
+                            repository.findAllByFirstName(searchFirstName) :
                             repository.findAll(),
                     PageRequest.of(page - 1, size)
             );

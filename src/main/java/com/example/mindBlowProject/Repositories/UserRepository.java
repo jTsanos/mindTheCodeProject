@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
-    List<User> findByFirstName(String firstName);
+    List<User> findAllByFirstName(String firstName);
 
-    // List<User> findUserStartingWith(String startsWith);
+     //List<User> findAllsearchByName(String searchByName);
 }
