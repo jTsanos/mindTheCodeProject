@@ -17,11 +17,11 @@ public class UserController {
 
    @GetMapping(value = "/api/users")
     List<User> GetUsers(
-         @RequestParam(name = "searchByName", required = false) String searchByName
+         @RequestParam(name = "searchByFirstName", required = false) String searchByFirstName
     ) {
 
-       if (searchByName != null) {
-           return repository.findAllByFirstName(searchByName);
+       if (searchByFirstName != null) {
+           return repository.findAllByFirstName(searchByFirstName);
        }
        return repository.findAll();
 

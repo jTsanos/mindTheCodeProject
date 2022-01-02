@@ -39,15 +39,15 @@ public class UserWebController {
         public Object showUsers(Model model,
                 @RequestParam(defaultValue = "1") int page,
                 @RequestParam(defaultValue = "10") int size,
-                @RequestParam(defaultValue = "") String searchFirstName
+                @RequestParam(defaultValue = "") String searchByFirstName
         ) {
             if (page < 1) {
                 return "redirect:/users?page=1&size="+ size;
             };
 
             Page<User> users = findPaginated(
-                    !searchFirstName.equals("") ?
-                            repository.findAllByFirstName(searchFirstName) :
+                    !searchByFirstName.equals("") ?
+                            repository.findAllByFirstName(searchByFirstName) :
                             repository.findAll(),
                     PageRequest.of(page - 1, size)
             );
@@ -67,7 +67,7 @@ public class UserWebController {
 
             model.addAttribute("page", page);
             model.addAttribute("users", users);
-            model.addAttribute("searchFirstName", new SearchByName(searchFirstName));
+            model.addAttribute("searchFirstName", new SearchByName(searchByFirstName));
             return "users";
         }
 

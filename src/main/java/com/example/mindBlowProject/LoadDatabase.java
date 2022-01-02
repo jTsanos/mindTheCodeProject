@@ -34,20 +34,24 @@ public class LoadDatabase {
     @EventListener(ApplicationReadyEvent.class)
     void initDatabase() {
 
-        log.info("Preloading " + addressRepo.save(generateRandomAddress()));
-        log.info("Preloading " + commentRepo.save(generateRandomComment()));
-        log.info("Preloading " + userRepo.save(generateRandomUser(addressRepo.findAll(),commentRepo.findAll())));
+        log.info("Preloading " + addressRepo.insert(generateRandomAddress()));
+        log.info("Preloading " + commentRepo.insert(generateRandomComment()));
+        log.info("Preloading " + userRepo.insert(generateRandomUser(addressRepo.findAll(),commentRepo.findAll())));
 
     }
 
-    private static User generateRandomUser(List<Address> addressList,List<Comment> commentList){
+    private static List<User> generateRandomUser(List<Address> addressList,List<Comment> commentList){
 
 
         //List<Address> addressList = new ArrayList<>();
      //   List<Comment> commentList = new ArrayList<>();
 
         User user = new User("john","tsan",addressList,commentList);
-        return user;
+        User user1 = new User("dim","kok",addressList,commentList);
+        List<User> allUsers = new ArrayList<>();
+        allUsers.add(user1);
+        allUsers.add(user);
+        return allUsers;
     }
 
     private static  Address generateRandomAddress(){
