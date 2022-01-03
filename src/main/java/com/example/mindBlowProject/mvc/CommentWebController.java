@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+
+@Controller
 public class CommentWebController {
     private final CommentRepository repository;
 
@@ -91,8 +94,8 @@ public class CommentWebController {
     }
 
     @GetMapping("/comments/update/{id}")
-    public String updateComment(@PathVariable("id") long id, Model model) {
-        Comment comment = repository.findById(String.valueOf(id))
+    public String updateComment(@PathVariable("id") String id, Model model) {
+        Comment comment = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid comment Id:" + id));
 
         model.addAttribute("comment", comment);
@@ -100,10 +103,10 @@ public class CommentWebController {
     }
 
     @PostMapping("/comments/update/{id}")
-    public String updateComment(@PathVariable("id") long id, @Valid Comment comment,
+    public String updateComment(@PathVariable("id") String id, @Valid Comment comment,
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
-            comment.setId(String.valueOf(id));
+            comment.setId(id);
             return "update-comment";
         }
 
@@ -112,8 +115,8 @@ public class CommentWebController {
     }
 
     @GetMapping("/comments/delete/{id}")
-    public String deleteComment(@PathVariable("id") long id, Model model) {
-        Comment comment = repository.findById(String.valueOf(id))
+    public String deleteComment(@PathVariable("id") String id, Model model) {
+        Comment comment = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         repository.delete(comment);
         return "redirect:/comments";

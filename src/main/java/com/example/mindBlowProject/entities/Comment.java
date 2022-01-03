@@ -5,6 +5,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 
@@ -16,6 +18,8 @@ public class Comment {
     private String id;
 
     private String text;
+
+
     private Date date;
 
     private User user;
