@@ -71,13 +71,13 @@ public class UserWebController {
             return "users";
         }
 
-        @GetMapping("/users/addUser")
+        @GetMapping("/users/adduser")
         public String addUser(Model model) {
             model.addAttribute("user", new User());
             return "add-user";
         }
 
-        @PostMapping("/users/addUser")
+        @PostMapping("/users/adduser")
         public String addUser(@Valid User user, BindingResult result, Model model) {
             if (result.hasErrors()) {
                 return "add-user";
