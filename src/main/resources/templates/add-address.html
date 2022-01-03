@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
+<head th:include="fragments/layout :: head(~{:: title})">
+    <title>Add Address</title>
+</head>
+<body>
+
+<!--/* The element with breadcrumb class will be passed to the header fragment */-->
+<header th:replace="fragments/layout :: header(~{ :: .breadcrumb})">
+    <ol class="breadcrumb container">
+        <li>
+            <a th:href="@{/}">Home</a>
+        </li>
+        /
+        <li>
+            <a th:href="@{/addresses}">Addresses</a>
+        </li>
+        /
+        <li>
+            <a th:href="@{/addresses/addAddress}">Add</a>
+        </li>
+    </ol>
+</header>
+
+
+<!--/* Insert content fragment with content of the element with id = 'cars-list' */-->
+<div th:replace="fragments/layout :: content(value = ~{:: #add-address})">
+
+    <div id="add-address" class="row" >
+        <form th:action="@{/addresses/addAddress}" th:object="${address}" method="post">
+            <div class="form-group">
+                <label for="street">Street</label>
+                <input type="text" th:field="*{street}" id="street" placeholder="Street" class="form-control">
+                <span th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="postalCode">Postal Code</label>
+                <input type="text" th:field="*{postalCode}" id="postalCode" placeholder="Postal Code" class="form-control">
+                <span th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-5">Create</button>
+        </form>
+    </div>
+
+</div>
+
+<footer th:replace="fragments/layout :: footer">Footer</footer>
+</body>
+</html>

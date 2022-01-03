@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
+<head th:include="fragments/layout :: head(~{:: title})">
+    <title>Welcome</title>
+</head>
+<body>
+
+<!--/* The element with breadcrumb class will be passed to the header fragment */-->
+<header th:replace="fragments/layout :: header(~{ :: .breadcrumb})">
+    <ol class="breadcrumb container">
+        <li>
+            <a th:href="@{/}">Home</a>
+        </li>
+        /
+        <li>
+            <a th:href="@{/users}">Users</a>
+        </li>
+        /
+        <li>
+            <a th:href="@{/addresses}">Addresses</a>
+        </li>
+    </ol>
+</header>
+
+
+<!--/* Insert content fragment with content of the element with id = 'cars-list' */-->
+
+
+<div th:replace="fragments/layout :: content(value = ~{:: #address-list})">
+
+
+
+    <div id="address-list" class="row" >
+        <div class="col-md-12" th:switch="${addresses.totalElements}">
+            <h2 th:case="0">No addresses!</h2>
+            <div th:case="*" >
+                <h2>Address</h2>
+
+                <form th:action="@{/addresses}" th:object="${searchAddressName}" method="post" class="form-inline">
+
+<!--                    <input class="form-control mr-sm-2" th:field="*{}"  type="search" placeholder="Search by Address name" aria-label="Search" />-->
+
+                </form>
+
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <!--<th># <a class="col-md-2" th:href="@{/cars/electric/addcar}">Add</a></th>-->
+                        <th>Address ID</th>
+                        <th>Street</th>
+                        <th>Postal Code</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="address : ${addresses.iterator()}">
+                        <td th:text="${address.id}"></td>
+                        <td th:text="${address.street}"></td>
+                        <td th:text="${address.postalCode}"></td>
+                        <!-- <td th:object="${user.addressList}"></td>
+                          <td th:text="${user.commentList}"></td> -->
+                        <td><a th:href="@{/addresses/update/{id}(id=${address.id})}">Edit</a></td>
+                        <td><a th:href="@{/addresses/delete/{id}(id=${address.id})}">Delete</a></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+
+                                <nav>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <div class="page-link" style="color: black" th:text="'Total Addresses:' + ${addresses.totalElements}"></div>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               th:style="${addresses.hasPrevious ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
+                                               th:href="@{/addresses/(size=${addresses.size}, page=${page - 1})}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+
+
+                                        <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                                            <a class="page-link"
+                                               th:style="${pageNumber == page ? 'background:#c7c7c7;' : 'background:initial;'}"
+                                               th:href="@{/addresses(size=${addresses.size}, page=${pageNumber}, searchByAdress=${searchAddressName})}"
+                                               th:text="${pageNumber}"></a>
+                                        </li>
+
+
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               th:style="${addresses.hasNext ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
+                                               th:href="@{/addresses/(size=${addresses.size}, page=${page + 1}, searchByAdress=${searchAddressName})}"
+                                               aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<footer th:replace="fragments/layout :: footer">Footer</footer>
+</body>
+</html>

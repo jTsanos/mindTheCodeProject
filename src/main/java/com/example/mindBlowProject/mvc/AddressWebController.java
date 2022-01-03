@@ -32,24 +32,24 @@ public class AddressWebController {
     }
 
     @PostMapping("/addresses")
-    public Object searchUserByFirstName(
+    public Object searchAddressByAddressName(
             @ModelAttribute SearchByAddressName searchAddressName) {
-        return "redirect:/addresses?searchByFirstName=" + searchAddressName.getAddressName();
+        return "redirect:/addresses?searchByAddressName=" + searchAddressName.getAddressName();
     }
 
     @GetMapping("/addresses")
     public Object showAddresses(Model model,
                             @RequestParam(defaultValue = "1") int page,
                             @RequestParam(defaultValue = "10") int size,
-                            @RequestParam(defaultValue = "") String searchAddressName
+                            @RequestParam(defaultValue = "") String searchByAddressName
     ) {
         if (page < 1) {
             return new RedirectView("/addresses?page=1&size="+ size);
         };
 
         Page<Address> addresses = findPaginated(
-                !searchAddressName.equals("") ?
-                        repository.findByStreet(searchAddressName) :
+                !searchByAddressName.equals("") ?
+                        repository.findByStreet(searchByAddressName) :
                         repository.findAll(),
                 PageRequest.of(page - 1, size)
         );
@@ -68,8 +68,8 @@ public class AddressWebController {
         }
 
         model.addAttribute("page", page);
-        model.addAttribute("address", addresses);
-        model.addAttribute("searchFirstName", new SearchByName(searchAddressName));
+        model.addAttribute("addresses", addresses);
+        model.addAttribute("searchAddressName", new SearchByName(searchByAddressName));
         return "addresses";
     }
 
@@ -91,8 +91,8 @@ public class AddressWebController {
     }
 
     @GetMapping("/addresses/update/{id}")
-    public String updateAddress(@PathVariable("id") long id, Model model) {
-        Address address = repository.findById(String.valueOf(id))
+    public String updateAddress(@PathVariable("id") String id, Model model) {
+        Address address = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid address Id:" + id));
 
         model.addAttribute("address", address);
@@ -100,10 +100,10 @@ public class AddressWebController {
     }
 
     @PostMapping("/addresses/update/{id}")
-    public String updateAddress(@PathVariable("id") long id, @Valid Address address,
+    public String updateAddress(@PathVariable("id") String id, @Valid Address address,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
-            address.setId(String.valueOf(id));
+            address.setId(id);
             return "update-address";
         }
 
@@ -112,8 +112,8 @@ public class AddressWebController {
     }
 
     @GetMapping("/addresses/delete/{id}")
-    public String deleteAddress(@PathVariable("id") long id, Model model) {
-        Address address = repository.findById(String.valueOf(id))
+    public String deleteAddress(@PathVariable("id") String id, Model model) {
+        Address address = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid address Id:" + id));
         repository.delete(address);
         return "redirect:/addresses";

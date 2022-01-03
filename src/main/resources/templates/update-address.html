@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
+<head th:include="fragments/layout :: head(~{:: title})">
+    <title>Update Address</title>
+    <style>
+        form {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+        .form .checkbox {
+            font-weight: 400;
+        }
+        form .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+        form .form-control:focus {
+            z-index: 2;
+        }
+        form input {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!--/* The element with breadcrumb class will be passed to the header fragment */-->
+<header th:replace="fragments/layout :: header(~{ :: .breadcrumb})">
+    <ol class="breadcrumb container">
+        <li>
+            <a th:href="@{/}">Home</a>
+        </li>
+        /
+        <li>
+            <a th:href="@{/addresses}">Addresses</a>
+        </li>
+        /
+        <li>
+            <a th:href="@{/addresses/update/{id}(id=${address.id})}">Update</a>
+        </li>
+    </ol>
+</header>
+
+
+<!--/* Insert content fragment with content of the element with id = 'cars-list' */-->
+<div th:replace="fragments/layout :: content(value = ~{:: #add-address})">
+
+    <div id="add-address" class="row" >
+        <form   th:action="@{/addresses/update/{id}(id=${address.id})}"
+                th:object="${address}"
+                method="post">
+            <div class="form-group">
+                <label for="street">Street</label>
+                <input type="text" th:field="*{street}" id="street" placeholder="Street" class="form-control">
+                <span th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="postalCode">Postal Code</label>
+                <input type="text" th:field="*{postalCode}" id="postalCode" placeholder="Postal Code" class="form-control">
+                <span th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-5">Update</button>
+        </form>
+    </div>
+
+</div>
+
+<footer th:replace="fragments/layout :: footer">Footer</footer>
+</body>
+</html>

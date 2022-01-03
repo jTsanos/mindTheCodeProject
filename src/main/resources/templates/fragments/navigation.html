@@ -20,6 +20,9 @@
                     <a class="nav-link" th:classappend="${#request.requestURI.startsWith('/users') ? 'active':''}" href="/users">Users</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" th:classappend="${#request.requestURI.startsWith('/addresses') ? 'active':''}" href="/addresses">Addresses</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" th:classappend="${#request.requestURI.startsWith('/comments') ? 'active':''}" href="/comments">Comments</a>
                 </li>
 
