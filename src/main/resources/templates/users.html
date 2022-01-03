@@ -34,6 +34,7 @@
             <div th:case="*" >
                 <h2>Users</h2>
 
+
                 <form th:action="@{/users}" th:object="${searchFirstName}" method="post" class="form-inline">
 
                     <input class="form-control mr-sm-2" th:field="*{firstName}"  type="search" placeholder="Search by Firstname" aria-label="Search" />
