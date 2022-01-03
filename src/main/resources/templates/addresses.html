@@ -15,10 +15,6 @@
         </li>
         /
         <li>
-            <a th:href="@{/users}">Users</a>
-        </li>
-        /
-        <li>
             <a th:href="@{/addresses}">Addresses</a>
         </li>
     </ol>
@@ -38,9 +34,9 @@
             <div th:case="*" >
                 <h2>Address</h2>
 
-                <form th:action="@{/addresses}" th:object="${searchAddressName}" method="post" class="form-inline">
+                <form th:action="@{/addresses}" th:object="${searchByAddressName}" method="post" class="form-inline">
 
-<!--                    <input class="form-control mr-sm-2" th:field="*{}"  type="search" placeholder="Search by Address name" aria-label="Search" />-->
+                <!--   <input class="form-control mr-sm-2" th:field="*{addressName}"  type="search" placeholder="Search by Address name" aria-label="Search" />-->
 
                 </form>
 
@@ -48,7 +44,8 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <!--<th># <a class="col-md-2" th:href="@{/cars/electric/addcar}">Add</a></th>-->
+                      <!--  <th># <a class="col-md-2" th:href="@{/addresses/addAddress}">Add</a></th> -->
+                        <tr>
                         <th>Address ID</th>
                         <th>Street</th>
                         <th>Postal Code</th>
@@ -89,7 +86,7 @@
                                         <li class="page-item" th:each="pageNumber : ${pageNumbers}">
                                             <a class="page-link"
                                                th:style="${pageNumber == page ? 'background:#c7c7c7;' : 'background:initial;'}"
-                                               th:href="@{/addresses(size=${addresses.size}, page=${pageNumber}, searchByAdress=${searchAddressName})}"
+                                               th:href="@{/addresses(size=${addresses.size}, page=${pageNumber}, searchByAdress=${searchByAddressName})}"
                                                th:text="${pageNumber}"></a>
                                         </li>
 
@@ -97,7 +94,7 @@
                                         <li class="page-item">
                                             <a class="page-link"
                                                th:style="${addresses.hasNext ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
-                                               th:href="@{/addresses/(size=${addresses.size}, page=${page + 1}, searchByAdress=${searchAddressName})}"
+                                               th:href="@{/addresses/(size=${addresses.size}, page=${page + 1}, searchByAdress=${searchByAddressName})}"
                                                aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                                 <span class="sr-only">Next</span>

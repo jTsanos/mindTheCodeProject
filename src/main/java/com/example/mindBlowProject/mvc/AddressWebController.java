@@ -69,7 +69,7 @@ public class AddressWebController {
 
         model.addAttribute("page", page);
         model.addAttribute("addresses", addresses);
-        model.addAttribute("searchAddressName", new SearchByName(searchByAddressName));
+        model.addAttribute("searchByAddressName", new SearchByAddressName(searchByAddressName));
         return "addresses";
     }
 
