@@ -1,6 +1,8 @@
 package com.example.mindBlowProject.mvc;
 
+import com.example.mindBlowProject.Repositories.AddressRepository;
 import com.example.mindBlowProject.Repositories.UserRepository;
+import com.example.mindBlowProject.entities.Address;
 import com.example.mindBlowProject.entities.User;
 import com.example.mindBlowProject.mvc.models.SearchByName;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,7 @@ import java.util.stream.IntStream;
 public class UserWebController {
 
     private final UserRepository repository;
+
 
 
     public UserWebController(UserRepository repository) {
@@ -116,6 +119,7 @@ public class UserWebController {
             repository.delete(user);
             return "redirect:/user";
         }
+
 
         private Page<User> findPaginated(List<User> users, Pageable pageable) {
             int pageSize = pageable.getPageSize();

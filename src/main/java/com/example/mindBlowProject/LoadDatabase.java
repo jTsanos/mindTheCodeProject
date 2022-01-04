@@ -46,17 +46,22 @@ public class LoadDatabase {
         //List<Address> addressList = new ArrayList<>();
      //   List<Comment> commentList = new ArrayList<>();
 
-        User user = new User("john","tsan",addressList,commentList);
-        User user1 = new User("dim","kok",addressList,commentList);
+
+
+        User user = new User("john","tsan",List.of(addressList.get(0),addressList.get(1)),commentList);
+        User user1 = new User("dim","kok",List.of(addressList.get(2),addressList.get(3)),commentList);
         List<User> allUsers = new ArrayList<>();
         allUsers.add(user1);
         allUsers.add(user);
         return allUsers;
     }
 
-    private static  Address generateRandomAddress(){
-        Address address = new Address("mitsotaki12","666");
-        return address;
+    private static  List<Address> generateRandomAddress(){
+        Address address = new Address("mitsotaki13","666");
+        Address address2 = new Address("tsipra12","666 666");
+        Address address3 = new Address("p","2");
+        Address address4 = new Address("o","1");
+        return List.of(address,address2,address3,address4);
     }
 
 

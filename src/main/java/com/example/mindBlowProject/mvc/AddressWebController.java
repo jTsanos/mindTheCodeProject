@@ -25,10 +25,12 @@ import java.util.stream.IntStream;
 @Controller
 public class AddressWebController {
     private final AddressRepository repository;
+    private final UserRepository userRepository;
 
 
-    public AddressWebController(AddressRepository repository) {
+    public AddressWebController(AddressRepository repository, UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/addresses")
@@ -117,6 +119,47 @@ public class AddressWebController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid address Id:" + id));
         repository.delete(address);
         return "redirect:/addresses";
+    }
+
+    @GetMapping("/addresses/user/{id}")
+    public Object getAddressesFromUser(@PathVariable("id") String id,
+                                       @RequestParam(defaultValue = "1") int page,
+                                        @RequestParam(defaultValue = "10") int size,
+                                       Model model){
+        if (page < 1) {
+            return new RedirectView("/addresses/user/id="+id+"?size="+ size + "&page=1");
+        };
+
+        User user =  userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+
+        List<Address> addressListOfUser = user.getAddressList();
+
+        Page<Address> addressListOfUserPages = findPaginated(addressListOfUser,
+                PageRequest.of(page - 1, size)
+        );
+
+        int totalPages = addressListOfUserPages.getTotalPages();
+
+        if (page > totalPages) {
+            return new RedirectView("/addresses/user/"+id+"?size="+ size + "&page=" + totalPages);
+        }
+
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page-2), Math.min(page + 2, totalPages))
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+
+        model.addAttribute("addressListOfUserPages", addressListOfUserPages);
+        model.addAttribute("user", user);
+        model.addAttribute("page", page);
+
+        return "addressListOfUser";
+
     }
 
     private Page<Address> findPaginated(List<Address> addresses, Pageable pageable) {
