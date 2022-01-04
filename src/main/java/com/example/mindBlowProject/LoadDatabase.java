@@ -66,10 +66,12 @@ public class LoadDatabase {
 
 
 
-    private static Comment generateRandomComment(){
+    private static List<Comment> generateRandomComment(){
         Date date = new Date();
         Comment comment = new Comment("kalo",date);
-        return comment;
+        Comment comment1 = new Comment("so so",date);
+        Comment comment2 = new Comment("haliaaa",date);
+        return List.of(comment,comment1,comment2);
     }
 
 

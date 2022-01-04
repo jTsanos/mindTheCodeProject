@@ -19,7 +19,7 @@
         </li>
         /
         <li>
-            <a th:href="@{#top}">User Address List</a> <!--#top  skips redirect error -->
+            <a th:href="@{#top}">User Comment List</a>
         </li>
     </ol>
 </header>
@@ -28,22 +28,22 @@
 <!--/* Insert content fragment with content of the element with id = 'cars-list' */-->
 
 
-<div th:replace="fragments/layout :: content(value = ~{:: #userAddress-list})">
+<div th:replace="fragments/layout :: content(value = ~{:: #userComment-list})">
 
 
 
-    <div id="userAddress-list" class="row" >
-        <div class="col-md-12" th:switch="${addressListOfUserPages.totalElements}">
+    <div id="userComment-list" class="row" >
+        <div class="col-md-12" th:switch="${commentListOfUserPages.totalElements}">
             <h2 th:case="0">No users!</h2>
             <div th:case="*" >
-                <h2>Addresses of User</h2>
+                <h2>Comment of User</h2>
 
 
-<!--                <form th:action="@{/users}" th:object="${searchFirstName}" method="post" class="form-inline">-->
+                <!--                <form th:action="@{/users}" th:object="${searchFirstName}" method="post" class="form-inline">-->
 
-<!--                    <input class="form-control mr-sm-2" th:field="*{firstName}"  type="search" placeholder="Search by Firstname" aria-label="Search" />-->
+                <!--                    <input class="form-control mr-sm-2" th:field="*{firstName}"  type="search" placeholder="Search by Firstname" aria-label="Search" />-->
 
-<!--                </form>-->
+                <!--                </form>-->
 
 
                 <table class="table">
@@ -59,14 +59,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="address : ${addressListOfUserPages.iterator()}">
-                        <td th:text="${address.id}"></td>
-                        <td th:text="${address.street}"></td>
-                        <td th:text="${address.postalCode}"></td>
+                    <tr th:each="comment : ${commentListOfUserPages.iterator()}">
+                        <td th:text="${comment.id}"></td>
+                        <td th:text="${comment.text}"></td>
+                        <td th:text="${comment.Date}"></td>
                         <!-- <td th:object="${user.addressList}"></td>
                           <td th:text="${user.commentList}"></td> -->
-                        <td><a th:href="@{/addresses/update/{id}(id=${address.id})}">Edit</a></td>
-                        <td><a th:href="@{/addresses/delete/{id}(id=${address.id})}">Delete</a></td>
+                        <td><a th:href="@{/comments/update/{id}(id=${comment.id})}">Edit</a></td>
+                        <td><a th:href="@{/comments/delete/{id}(id=${comment.id})}">Delete</a></td>
 
                     </tr>
                     </tbody>
@@ -76,12 +76,12 @@
                 <nav>
                     <ul class="pagination">
                         <li class="page-item">
-                            <div class="page-link" style="color: black" th:text="'Total Addresses:' + ${addressListOfUserPages.totalElements}"></div>
+                            <div class="page-link" style="color: black" th:text="'Total Comments:' + ${commentListOfUserPages.totalElements}"></div>
                         </li>
                         <li class="page-item">
                             <a class="page-link"
-                               th:style="${addressListOfUserPages.hasPrevious ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
-                               th:href="@{/addresses/user/(id=${user.id},size=${addressListOfUserPages.size}, page=${page - 1})}" aria-label="Previous">
+                               th:style="${commentListOfUserPages.hasPrevious ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
+                               th:href="@{/comments/user/(id=${user.id},size=${commentListOfUserPages.size}, page=${page - 1})}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                                 <span class="sr-only">Previous</span>
                             </a>
@@ -91,15 +91,15 @@
                         <li class="page-item" th:each="pageNumber : ${pageNumbers}">
                             <a class="page-link"
                                th:style="${pageNumber == page ? 'background:#c7c7c7;' : 'background:initial;'}"
-                               th:href="@{/addresses/user/(id=${user.id},size=${addressListOfUserPages.size}, page=${pageNumber})}"
+                               th:href="@{/comments/user/(id=${user.id},size=${commentListOfUserPages.size}, page=${pageNumber})}"
                                th:text="${pageNumber}"></a>
                         </li>
 
 
                         <li class="page-item">
                             <a class="page-link"
-                               th:style="${addressListOfUserPages.hasNext ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
-                               th:href="@{/addresses/user/(id=${user.id},size=${addressListOfUserPages.size}, page=${page + 1})}"
+                               th:style="${commentListOfUserPages.hasNext ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
+                               th:href="@{/comments/user/(id=${user.id},size=${commentListOfUserPages.size}, page=${page + 1})}"
                                aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only">Next</span>
