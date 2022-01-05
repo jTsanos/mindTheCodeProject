@@ -4,10 +4,11 @@ import com.example.mindBlowProject.entities.Address;
 import com.example.mindBlowProject.entities.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
-
+@Repository
 public interface AddressRepository extends MongoRepository<Address, String> {
 
     List<Address> findByStreet(String addressName);
