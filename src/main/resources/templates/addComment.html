@@ -3,7 +3,7 @@
 
 <!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
 <head th:include="fragments/layout :: head(~{:: title})">
-    <title>Add Address</title>
+    <title>Add Comment</title>
 </head>
 <body>
 
@@ -15,46 +15,41 @@
         </li>
         /
         <li>
-            <a th:href="@{/addresses}">Addresses</a>
+            <a th:href="@{/comments}">Comments</a>
         </li>
         /
         <li>
-            <a th:href="@{/addresses/addAddress}">Add</a>
+            <a th:href="@{/comments/addComment}">Add</a>
         </li>
     </ol>
 </header>
 
 
 <!--/* Insert content fragment with content of the element with id = 'cars-list' */-->
-<div th:replace="fragments/layout :: content(value = ~{:: #add-address})">
+<div th:replace="fragments/layout :: content(value = ~{:: #add-comment})">
 
-    <div id="add-address" class="row" >
-        <form th:action="@{/addresses/addAddress}" th:object="${address}" method="post">
+    <div id="add-comment" class="row" >
+        <form th:action="@{/comments/addComment}" th:object="${comment}" method="post">
             <div class="form-group">
-                <label for="street">Street</label>
-                <input type="text" th:field="*{street}" id="street" placeholder="Street" class="form-control">
-                <span th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></span>
+                <label for="Text">Text</label>
+                <input type="text" th:field="*{text}" id="Text" placeholder="Text" class="form-control">
+                <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></span>
             </div>
 
-
             <div class="form-group">
-                <label for="postalCode">Postal Code</label>
-                <input type="text" th:field="*{postalCode}" id="postalCode" placeholder="Postal Code" class="form-control">
-                <span th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></span>
+                <label for="Date">Date</label>
+                <input type="text" th:field="*{date}" id="Date" placeholder="Date" class="form-control">
+                <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
             </div>
-
 
             <div style="display:none;" class="form-group">
-                <label for="street">Street</label>
+                <label for="text">Street</label>
                 <input type="text" th:field="${user.id}" id="userID" class="form-control">
             </div>
-
 
             <button type="submit" class="btn btn-primary mt-5">Create</button>
         </form>
     </div>
-
-
 
 </div>
 

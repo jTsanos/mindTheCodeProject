@@ -41,13 +41,14 @@ public class AddressWebController {
 
     @GetMapping("/addresses")
     public Object showAddresses(Model model,
-                            @RequestParam(defaultValue = "1") int page,
-                            @RequestParam(defaultValue = "10") int size,
-                            @RequestParam(defaultValue = "") String searchByAddressName
+                                @RequestParam(defaultValue = "1") int page,
+                                @RequestParam(defaultValue = "10") int size,
+                                @RequestParam(defaultValue = "") String searchByAddressName
     ) {
         if (page < 1) {
-            return new RedirectView("/addresses?page=1&size="+ size);
-        };
+            return new RedirectView("/addresses?page=1&size=" + size);
+        }
+        ;
 
         Page<Address> addresses = findPaginated(
                 !searchByAddressName.equals("") ?
@@ -59,11 +60,12 @@ public class AddressWebController {
         int totalPages = addresses.getTotalPages();
 
         if (page > totalPages) {
-            return new RedirectView("/addresses?size="+ size + "&page=" + totalPages);
-        };
+            return new RedirectView("/addresses?size=" + size + "&page=" + totalPages);
+        }
+        ;
 
         if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page-2), Math.min(page + 2, totalPages))
+            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page - 2), Math.min(page + 2, totalPages))
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
@@ -82,12 +84,17 @@ public class AddressWebController {
     }
 
     @PostMapping("/addresses/addAddress")
-    public String addAddress(@Valid Address address, BindingResult result, Model model) {
+    public String addAddress(@Valid Address address, BindingResult result, Model model,User user) {
         if (result.hasErrors()) {
             return "add-address";
         }
 
+        User user1 = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" ));
+
+        user1.getAddressList().add(address);
         repository.save(address);
+        userRepository.save(user1);
         model.addAttribute("address", address);
         return "redirect:/addresses";
     }
@@ -103,7 +110,7 @@ public class AddressWebController {
 
     @PostMapping("/addresses/update/{id}")
     public String updateAddress(@PathVariable("id") String id, @Valid Address address,
-                             BindingResult result, Model model) {
+                                BindingResult result, Model model) {
         if (result.hasErrors()) {
             address.setId(id);
             return "update-address";
@@ -124,19 +131,20 @@ public class AddressWebController {
     @GetMapping("/addresses/user/{id}")
     public Object getAddressesFromUser(@PathVariable("id") String id,
                                        @RequestParam(defaultValue = "1") int page,
-                                        @RequestParam(defaultValue = "10") int size,
-                                       Model model){
+                                       @RequestParam(defaultValue = "10") int size,
+                                       Model model) {
         if (page < 1) {
-            return new RedirectView("/addresses/user/id="+id+"?size="+ size + "&page=1");
-        };
+            return new RedirectView("/addresses/user/id=" + id + "?size=" + size + "&page=1");
+        }
+        ;
 
-        User user =  userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
 
         List<Address> addressListOfUser = user.getAddressList();
 
-        if(addressListOfUser.size() == 0){
+        if (addressListOfUser.size() == 0) {
             return new RedirectView("/nodata");
         }
 
@@ -147,11 +155,11 @@ public class AddressWebController {
         int totalPages = addressListOfUserPages.getTotalPages();
 
         if (page > totalPages) {
-            return new RedirectView("/addresses/user/"+id+"?size="+ size + "&page=" + totalPages);
+            return new RedirectView("/addresses/user/" + id + "?size=" + size + "&page=" + totalPages);
         }
 
         if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page-2), Math.min(page + 2, totalPages))
+            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page - 2), Math.min(page + 2, totalPages))
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
@@ -186,7 +194,23 @@ public class AddressWebController {
     }
 
     @GetMapping("/nodata")
-    private String nodata (){
+    private String nodata() {
         return "nodataPage";
     }
+
+
+    @GetMapping("/addresses/addAddress/user/{id}")
+    public String addAddressToSpecificUser(@PathVariable("id") String id, Model model) {
+
+        Address address = new Address();
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+        model.addAttribute(address);
+        model.addAttribute(user);
+        return "add-address";
+    }
+
 }
+

@@ -20,7 +20,10 @@ public class Comment {
     @Id
     private String id;
     private String text;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date date;
+
     private User user;
 
     @DBRef

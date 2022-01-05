@@ -34,7 +34,7 @@
             <div th:case="*" >
                 <h2>Comments</h2>
 
-                <form th:action="@{/comments}" th:object="${search}" method="post" class="form-inline">
+                <form th:action="@{/comments}" th:object="${searchByText}" method="post" class="form-inline">
 
                    <!-- <input class="form-control mr-sm-2" th:field="*{commentText}"  type="search" placeholder="Search by Text" aria-label="Search" />
 -->
@@ -44,7 +44,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th># <a class="col-md-2" th:href="@{/comments/addComment}">Add</a></th>
+                       <!-- <th># <a class="col-md-2" th:href="@{/comments/addComment}">Add</a></th>-->
                         <tr>
                         <th>Comment ID</th>
                         <th>Text</th>

@@ -2,10 +2,8 @@ package com.example.mindBlowProject.mvc;
 
 import com.example.mindBlowProject.Repositories.CommentRepository;
 import com.example.mindBlowProject.Repositories.UserRepository;
-import com.example.mindBlowProject.entities.Address;
 import com.example.mindBlowProject.entities.Comment;
 import com.example.mindBlowProject.entities.User;
-import com.example.mindBlowProject.mvc.models.SearchByName;
 import com.example.mindBlowProject.mvc.models.SearchCommentByText;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -80,19 +78,24 @@ public class CommentWebController {
         return "comments";
     }
 
-    @GetMapping("/comments/addComment")
-    public String addComment(Model model) {
-        model.addAttribute("comment", new Comment());
-        return "add-comment";
-    }
+//    @GetMapping("/comments/addComment")
+//    public String addComment(Model model) {
+//        model.addAttribute("comment", new Comment());
+//        return "addComment";
+//    }
 
     @PostMapping("/comments/addComment")
-    public String addComment(@Valid Comment comment, BindingResult result, Model model) {
+    public String addComment(@Valid Comment comment, BindingResult result, Model model,User user) {
         if (result.hasErrors()) {
-            return "add-comment";
+            return "addComment";
         }
 
+        User user1 = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" ));
+
+        user1.getCommentList().add(comment);
         repository.save(comment);
+        userRepository.save(user1);
         model.addAttribute("comment", comment);
         return "redirect:/comments";
     }
@@ -192,5 +195,18 @@ public class CommentWebController {
         Page<Comment> commentPage = new PageImpl<Comment>(result, PageRequest.of(currentPage, pageSize), comments.size());
 
         return commentPage;
+    }
+
+    @GetMapping("/comments/addNewComment/user/{id}")
+    public String addCommentToSpecificUser(@PathVariable("id") String id, Model model) {
+
+        Comment comment = new Comment();
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+        model.addAttribute(comment);
+        model.addAttribute(user);
+        return "addComment";
     }
 }

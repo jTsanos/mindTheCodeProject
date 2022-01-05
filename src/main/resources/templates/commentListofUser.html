@@ -48,12 +48,12 @@
 
                 <table class="table">
                     <thead>
-                    <th># <a class="col-md-2" th:href="@{/users/adduser}">Add</a></th>
+                    <th># <a class="col-md-2" th:href="@{/comments/addNewComment/user/{id}(id=${user.id})}">Add</a></th>
                     <tr>
 
-                        <th>Address ID</th>
-                        <th>Street</th>
-                        <th>Postal Code</th>
+                        <th>Comment ID</th>
+                        <th>Text</th>
+                        <th>Date</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -62,7 +62,7 @@
                     <tr th:each="comment : ${commentListOfUserPages.iterator()}">
                         <td th:text="${comment.id}"></td>
                         <td th:text="${comment.text}"></td>
-                        <td th:text="${comment.Date}"></td>
+                        <td th:text="${comment.date}"></td>
                         <!-- <td th:object="${user.addressList}"></td>
                           <td th:text="${user.commentList}"></td> -->
                         <td><a th:href="@{/comments/update/{id}(id=${comment.id})}">Edit</a></td>
