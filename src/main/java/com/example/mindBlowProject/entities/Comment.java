@@ -1,6 +1,8 @@
 package com.example.mindBlowProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -8,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Document(collection = "comments")
@@ -16,13 +19,13 @@ public class Comment {
 
     @Id
     private String id;
-
     private String text;
-
-
     private Date date;
-
     private User user;
+
+    @DBRef
+    @JsonManagedReference
+    private List<User> users;
 
     public Comment(){}
 
@@ -33,6 +36,13 @@ public class Comment {
 
     public String getId() {
         return id;
+    }
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public void setId(String id) {
