@@ -9,6 +9,7 @@ import java.util.List;
 public interface CommentRepository extends MongoRepository<Comment, String> {
 
     List<Comment> findCommentByText(String commentText);
+    List<Comment> findCommentByUsers(List<User> users);
 
 
 }

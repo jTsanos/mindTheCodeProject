@@ -34,10 +34,10 @@
             <div th:case="*" >
                 <h2>Comments</h2>
 
-                <form th:action="@{/comments}" th:object="${searchByText}" method="post" class="form-inline">
+                <form th:action="@{/comments}" th:object="${search}" method="post" class="form-inline">
 
-                    <input class="form-control mr-sm-2" th:field="*{commentText}"  type="search" placeholder="Search by Text" aria-label="Search" />
-
+                   <!-- <input class="form-control mr-sm-2" th:field="*{commentText}"  type="search" placeholder="Search by Text" aria-label="Search" />
+-->
                 </form>
 
 
@@ -67,16 +67,17 @@
                     </tbody>
                 </table>
 
-                <!--
+
                                 <nav>
                                     <ul class="pagination">
                                         <li class="page-item">
-                                            <div class="page-link" style="color: black" th:text="'Total Users:' + ${users.totalElements}"></div>
+                                            <div class="page-link" style="color: black" th:text="'Total comments:' + ${comments.totalElements}"></div>
                                         </li>
+                                        <!-- previous PAGINATION BUTTON-->
                                         <li class="page-item">
                                             <a class="page-link"
-                                               th:style="${users.hasPrevious ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
-                                               th:href="@{/users/FirstName(size=${users.size}, page=${page - 1})}" aria-label="Previous">
+                                               th:style="${comments.hasPrevious ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
+                                               th:href="@{/comments(size=${comments.size}, page=${page - 1})}" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                                 <span class="sr-only">Previous</span>
                                             </a>
@@ -86,15 +87,15 @@
                                         <li class="page-item" th:each="pageNumber : ${pageNumbers}">
                                             <a class="page-link"
                                                th:style="${pageNumber == page ? 'background:#c7c7c7;' : 'background:initial;'}"
-                                               th:href="@{/user(size=${users.size}, page=${pageNumber}, searchByName=${searchFirstName})}"
+                                               th:href="@{/comments(size=${comments.size}, page=${pageNumber}, searchComments=${comments})}"
                                                th:text="${pageNumber}"></a>
                                         </li>
 
 
                                         <li class="page-item">
                                             <a class="page-link"
-                                               th:style="${users.hasNext ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
-                                               th:href="@{/users/AdressName(size=${users.size}, page=${page + 1}, searchByAdress=${searchFirstName})}"
+                                               th:style="${comments.hasNext ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
+                                               th:href="@{/comments(size=${comments.size}, page=${page + 1}, searchComment=${comments})}"
                                                aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                                 <span class="sr-only">Next</span>
@@ -102,7 +103,7 @@
                                         </li>
                                     </ul>
                                 </nav>
-                                -->
+
             </div>
         </div>
 

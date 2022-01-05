@@ -1,6 +1,8 @@
 package com.example.mindBlowProject.mvc;
 
+import com.example.mindBlowProject.Repositories.AddressRepository;
 import com.example.mindBlowProject.Repositories.UserRepository;
+import com.example.mindBlowProject.entities.Address;
 import com.example.mindBlowProject.entities.User;
 import com.example.mindBlowProject.mvc.models.SearchByName;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,7 @@ public class UserWebController {
     private final UserRepository repository;
 
 
+
     public UserWebController(UserRepository repository) {
         this.repository = repository;
     }
@@ -42,7 +45,7 @@ public class UserWebController {
                 @RequestParam(defaultValue = "") String searchByFirstName
         ) {
             if (page < 1) {
-                return "redirect:/users?page=1&size="+ size;
+                return new RedirectView( "/users?page=1&size="+ size);
             };
 
             Page<User> users = findPaginated(
@@ -89,7 +92,7 @@ public class UserWebController {
         }
 
         @GetMapping("/users/update/{id}")
-        public String updateUser(@PathVariable("id") long id, Model model) {
+        public String updateUser(@PathVariable("id") String id, Model model) {
             User user = repository.findById(String.valueOf(id))
                     .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
@@ -98,7 +101,7 @@ public class UserWebController {
         }
 
         @PostMapping("/users/update/{id}")
-        public String updateUser(@PathVariable("id") long id, @Valid User user,
+        public String updateUser(@PathVariable("id") String id, @Valid User user,
                                 BindingResult result, Model model) {
             if (result.hasErrors()) {
                 user.setId(String.valueOf(id));
@@ -110,12 +113,13 @@ public class UserWebController {
         }
 
         @GetMapping("/users/delete/{id}")
-        public String deleteUser(@PathVariable("id") long id, Model model) {
-            User user = repository.findById(String.valueOf(id))
+        public String deleteUser(@PathVariable("id") String id, Model model) {
+            User user = repository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
             repository.delete(user);
-            return "redirect:/user";
+            return "redirect:/users";
         }
+
 
         private Page<User> findPaginated(List<User> users, Pageable pageable) {
             int pageSize = pageable.getPageSize();

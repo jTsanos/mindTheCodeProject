@@ -1,0 +1,49 @@
+#ufo{
+    bottom: 15%;
+    display: block;
+    position: absolute;
+    animation: linear infinite alternate;
+    animation-name: run;
+    animation-duration: 4s;
+}
+
+@-webkit-keyframes run {
+    0% {
+        left: 0;
+        transform: translateX(0);
+    }
+    100% {
+        left: 100%;
+        transform: translateX(-100%);
+    }
+
+}
+
+
+container-fluid.py-5.img
+
+{
+    display: none !important;
+
+}
+
+
+/* .col-md-8.fs-4 {
+    bottom: 15%;
+    position: absolute;
+    -webkit-animation: linear infinite;
+    -webkit-animation-name: run;
+    -webkit-animation-duration: 5s;
+}
+@-webkit-keyframes run {
+    0% {
+        left: 0;
+    }
+    50% {
+        left: 100%;
+    }
+    100% {
+        left: 0;
+    }
+}
+
