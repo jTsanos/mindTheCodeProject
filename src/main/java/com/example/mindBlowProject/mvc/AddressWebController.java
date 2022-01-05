@@ -136,6 +136,10 @@ public class AddressWebController {
 
         List<Address> addressListOfUser = user.getAddressList();
 
+        if(addressListOfUser.size() == 0){
+            return new RedirectView("/nodata");
+        }
+
         Page<Address> addressListOfUserPages = findPaginated(addressListOfUser,
                 PageRequest.of(page - 1, size)
         );
@@ -179,5 +183,10 @@ public class AddressWebController {
         Page<Address> addressPage = new PageImpl<Address>(result, PageRequest.of(currentPage, pageSize), addresses.size());
 
         return addressPage;
+    }
+
+    @GetMapping("/nodata")
+    private String nodata (){
+        return "nodataPage";
     }
 }
