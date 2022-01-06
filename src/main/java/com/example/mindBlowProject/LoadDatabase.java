@@ -4,6 +4,7 @@ import com.example.mindBlowProject.Repositories.AddressRepository;
 import com.example.mindBlowProject.Repositories.CommentRepository;
 import com.example.mindBlowProject.Repositories.UserRepository;
 import com.example.mindBlowProject.entities.Address;
+import com.example.mindBlowProject.entities.AppUserRole;
 import com.example.mindBlowProject.entities.Comment;
 import com.example.mindBlowProject.entities.User;
 import org.slf4j.Logger;
@@ -48,8 +49,8 @@ public class LoadDatabase {
 
 
 
-        User user = new User("john","tsan",List.of(addressList.get(0),addressList.get(1)),commentList);
-        User user1 = new User("dim","kok",List.of(addressList.get(2),addressList.get(3)),commentList);
+        User user = new User("john","tsan",List.of(addressList.get(0),addressList.get(1)),commentList, AppUserRole.ADMIN);
+        User user1 = new User("dim","kok",List.of(addressList.get(2),addressList.get(3)),commentList,AppUserRole.ADMIN);
         List<User> allUsers = new ArrayList<>();
         allUsers.add(user1);
         allUsers.add(user);

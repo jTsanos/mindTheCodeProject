@@ -41,11 +41,12 @@ public  class User implements UserDetails {
 
     public User(){}
 
-    public User(String firstName, String lastName, List<Address> addressList, List<Comment> commentList) {
+    public User(String firstName, String lastName, List<Address> addressList, List<Comment> commentList,AppUserRole appUserRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.addressList = addressList;
         this.commentList = commentList;
+        this.appUserRole = appUserRole;
     }
 
     public User(String firstName, String lastName, String email, String password, AppUserRole appUserRole) {
