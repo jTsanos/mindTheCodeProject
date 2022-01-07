@@ -16,19 +16,19 @@
                 <div class="form-row">
                     <div class="col-md-6 form-group">
                         <label>FirstName</label>
-                        <input type="text" class="form-control" th:field="*{firstName}">
+                        <input type="text" name="Firstname" class="form-control" th:value="*{firstName}" required="true">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>LastName</label>
-                        <input type="text" class="form-control" th:field="*{lastName}">
+                        <input type="text" class="form-control" th:field="*{lastName}" required="true">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Email</label>
-                        <input type="text" class="form-control" th:field="*{email}">
+                        <input type="text" class="form-control" th:field="*{email}" required="true">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Password</label>
-                        <input type="text" class="form-control" th:field="*{password}">
+                        <input type="text" class="form-control" th:field="*{password}" required="true">
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>

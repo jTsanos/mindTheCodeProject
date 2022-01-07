@@ -144,8 +144,9 @@ public class AddressWebController {
 
         List<Address> addressListOfUser = user.getAddressList();
 
-        if (addressListOfUser.size() == 0) {
-            return new RedirectView("/nodata");
+        if (addressListOfUser.size() == 0 || addressListOfUser == null) {
+            return new RedirectView("/nodata/"+ id);
+
         }
 
         Page<Address> addressListOfUserPages = findPaginated(addressListOfUser,
@@ -193,10 +194,7 @@ public class AddressWebController {
         return addressPage;
     }
 
-    @GetMapping("/nodata")
-    private String nodata() {
-        return "nodataPage";
-    }
+
 
 
     @GetMapping("/addresses/addAddress/user/{id}")

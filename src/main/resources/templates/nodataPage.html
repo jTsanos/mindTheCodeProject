@@ -1,17 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<link href="animate.css" rel="stylesheet"/>
+<!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
+<head th:include="fragments/layout :: head(~{:: title})">
+    <title>Welcome</title>
 </head>
 <body>
-<h1>NOOOOOO DATAAAA</h1>
+
+<!--/* The element with breadcrumb class will be passed to the header fragment */-->
+<header th:replace="fragments/layout :: header(~{ :: .breadcrumb})">
+    <ol class="breadcrumb container">
+        <li><a th:href="@{/}">Home</a></li>
+        /
+    </ol>
+</header>
 
 
-<div>
-    <button onclick="location.href='/' " type="button">
-    back TO Home
-    </button>
+
+<div th:replace="fragments/layout :: content(~{:: #welcome})">
+    <div class="yo" ></div>
+    <div id="welcome" class="row" >
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <div id="ufo"> <img style="height: 150px;" src="https://thelastwildtypes.com/wp-content/uploads/prvlos.png" >
+                </div>
+                <h1 class="display-5 fw-bold">Mind Blow Project</h1>
+                <p class="col-md-8 fs-4">This is a Proof Of Concept project</p>
+                <h2> There are no Comments or no Addresses for this User! </h2>
+                <a class="btn btn-primary btn-lg" th:href="@{/addresses/addAddress/user/{id}(id=${user.id})}" role="button">Create Address</a>
+                <a class="btn btn-primary btn-lg" th:href="@{/comments/addNewComment/user/{id}(id=${user.id})}" role="button">Create Comment</a>
+                <a class="btn btn-primary" href="#" role="button">Link</a>
+                <a class="btn btn-primary" href="#" role="button">Link</a>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
+
+
+<footer th:replace="fragments/layout :: footer">Footer</footer>
 </body>
 </html>

@@ -147,7 +147,7 @@ public class CommentWebController {
         List<Comment> commentListOfUser = user.getCommentList();
 
         if(commentListOfUser.size() == 0){
-            return new RedirectView("/nodata");
+            return new RedirectView("/nodata/" +id);
         }
 
         Page<Comment> commentListOfUserPages = findPaginated(commentListOfUser,
