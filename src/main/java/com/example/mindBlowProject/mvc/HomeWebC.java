@@ -10,6 +10,11 @@ public class HomeWebC {                    /*  Mapping host:port/ --to--> templa
         return "landing_page";
     }
 
+    @GetMapping("/register")
+    public String register()
+    {
+        return "userRegistration";
+    }
 
 }
 
