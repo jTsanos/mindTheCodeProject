@@ -144,8 +144,11 @@ public class AddressWebController {
 
         List<Address> addressListOfUser = user.getAddressList();
 
-        if (addressListOfUser.size() == 0 || addressListOfUser == null) {
-            return new RedirectView("/nodata/"+ id);
+        if(addressListOfUser.size() == 0 ){
+            return new RedirectView("/nodata/" +id);
+        }
+        else if (addressListOfUser.size() == 1 && addressListOfUser == null) {
+            return new RedirectView("/nodata/" +id);
 
         }
 

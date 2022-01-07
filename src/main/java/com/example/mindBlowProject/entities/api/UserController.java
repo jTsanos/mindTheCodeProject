@@ -48,12 +48,12 @@ public class UserController {
     }
 
     @DeleteMapping("/api/users")
-    void deleteAllCars() {
+    void deleteAllUsers() {
         repository.deleteAll();
     }
 
     @DeleteMapping("/api/users/{id}")
-    void deleteCar(@PathVariable String id) {
+    void deleteUser(@PathVariable String id) {
         repository.deleteById(id);
     }
 }

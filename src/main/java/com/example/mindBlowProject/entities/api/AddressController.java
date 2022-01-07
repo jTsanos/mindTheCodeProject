@@ -44,12 +44,12 @@ public class AddressController {
     }
 
     @DeleteMapping("/api/addresses")
-    void deleteAllCars() {
+    void deleteAllUsers() {
         repository.deleteAll();
     }
 
     @DeleteMapping("/api/addresses/{id}")
-    void deleteCar(@PathVariable String id) {
+    void deleteUser(@PathVariable String id) {
         repository.deleteById("id");
     }
 }

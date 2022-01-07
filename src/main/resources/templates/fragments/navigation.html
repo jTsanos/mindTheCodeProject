@@ -26,7 +26,7 @@
                     <a class="nav-link" th:classappend="${#request.requestURI.startsWith('/comments') ? 'active':''}" href="/comments">Comments</a>
                 </li>
 
-                <li th:if="${#request.isUserInRole('USER')}" class="nav-item">
+                <li class="nav-item">
                     <form th:action="@{/logout}" method="post">
                         <input class="button" type="submit" value="Sign Out"/>
                     </form>

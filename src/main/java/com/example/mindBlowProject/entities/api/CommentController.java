@@ -43,12 +43,12 @@ public class CommentController {
     }
 
     @DeleteMapping("/api/comments")
-    void deleteAllCars() {
+    void deleteAllUsers() {
         repository.deleteAll();
     }
 
     @DeleteMapping("/api/comments/{id}")
-    void deleteCar(@PathVariable String id) {
+    void deleteUser(@PathVariable String id) {
         repository.deleteById("id");
     }
 }
