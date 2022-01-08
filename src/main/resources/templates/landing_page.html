@@ -16,7 +16,7 @@
 </header>
 
 
-<!--/* Insert content fragment with content of the element with id = 'cars-list' */-->
+
 <div th:replace="fragments/layout :: content(~{:: #welcome})">
 <div class="yo" ></div>
     <div id="welcome" class="row" >
@@ -27,8 +27,8 @@
                 <h1 class="display-5 fw-bold">Mind Blow Project</h1>
                 <p class="col-md-8 fs-4">This is a Proof Of Concept project</p>
                 <a class="btn btn-primary btn-lg" th:href="@{/swagger-ui.html}" role="button">API DOCUMENTATION</a>
-                <a class="btn btn-primary btn-lg" th:href="/users" role="button">Users</a>
-                <a class="btn btn-primary btn-lg" th:href="/comments" role="Comments">Comments</a>
+                <a class="btn btn-primary btn-lg" th:href="@{/users}" role="button">Users</a>
+                <a class="btn btn-primary btn-lg" th:href="@{/comments}" role="Comments">Comments</a>
             </div>
         </div>
     </div>
