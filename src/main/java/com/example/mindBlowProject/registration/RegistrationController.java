@@ -67,7 +67,7 @@ public class RegistrationController {
                                                                         user);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        String link = "http://localhost:8080/v1/registration/confirm?token="+token;
+        String link = "http://localhost:8083/v1/registration/confirm?token="+token;
         emailSender.send(user.getEmail(),buildEmail(user.getFirstName(),link));
 
         model.addAttribute("user", user);
