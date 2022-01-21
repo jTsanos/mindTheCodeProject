@@ -32,7 +32,7 @@
         <form th:action="@{/addresses/addAddress}" th:object="${address}" method="post">
             <div class="form-group">
                 <label for="street">Street</label>
-                <input type="text" th:field="*{street}" id="street" placeholder="Street" class="form-control">
+                <input type="text" th:field="*{street}" id="street" placeholder="Street" class="form-control" required="true">
                 <span th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></span>
             </div>
             <div></div>
@@ -40,13 +40,13 @@
 
             <div class="form-group">
                 <label for="postalCode">Postal Code</label>
-                <input type="text" th:field="*{postalCode}" id="postalCode" placeholder="Postal Code" class="form-control">
+                <input type="text" th:field="*{postalCode}" id="postalCode" placeholder="Postal Code" class="form-control" required="true">
                 <span th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></span>
             </div>
 
 
             <div style="display:none;" class="form-group">
-                <label for="street">Street</label>
+
                 <input type="text" th:field="${user.id}" id="userID" class="form-control">
             </div>
 

@@ -2,6 +2,7 @@ package com.example.mindBlowProject.mvc;
 
 import com.example.mindBlowProject.Repositories.CommentRepository;
 import com.example.mindBlowProject.Repositories.UserRepository;
+import com.example.mindBlowProject.entities.Address;
 import com.example.mindBlowProject.entities.Comment;
 import com.example.mindBlowProject.entities.User;
 import com.example.mindBlowProject.mvc.models.SearchCommentByText;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -89,14 +91,14 @@ public class CommentWebController {
         if (result.hasErrors()) {
             return "addComment";
         }
-
+       Comment newComment = new Comment(comment.getText(),comment.getDate());
         User user1 = userRepository.findById(user.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" ));
 
-        user1.getCommentList().add(comment);
-        repository.save(comment);
+        user1.getCommentList().add(newComment);
+        repository.save(newComment);
         userRepository.save(user1);
-        model.addAttribute("comment", comment);
+        model.addAttribute("comment", newComment);
         return "redirect:/comments";
     }
 
@@ -146,10 +148,18 @@ public class CommentWebController {
 
         List<Comment> commentListOfUser = user.getCommentList();
 
-        if(commentListOfUser.size() == 0 ){
+        if  (commentListOfUser == null) {
+            List<Comment> commentList = new ArrayList<>();
+            user.setCommentList(commentList);
+            userRepository.save(user);
             return new RedirectView("/nodata/" +id);
         }
-        else if (commentListOfUser.size() == 1 && commentListOfUser == null) {
+        else if (commentListOfUser.size() == 1 && commentListOfUser.get(0) == null) {
+            return new RedirectView("/nodata/" +id);
+
+
+        }
+        else if (commentListOfUser.size() == 0 ){
             return new RedirectView("/nodata/" +id);
 
         }

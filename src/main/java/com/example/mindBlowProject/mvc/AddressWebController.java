@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,14 +89,16 @@ public class AddressWebController {
         if (result.hasErrors()) {
             return "add-address";
         }
+        Address newAddress = new Address(address.getStreet(),address.getPostalCode()  );
+
 
         User user1 = userRepository.findById(user.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" ));
 
-        user1.getAddressList().add(address);
-        repository.save(address);
+        user1.getAddressList().add(newAddress);
+        repository.save(newAddress);
         userRepository.save(user1);
-        model.addAttribute("address", address);
+        model.addAttribute("address", newAddress);
         return "redirect:/addresses";
     }
 
@@ -125,6 +128,7 @@ public class AddressWebController {
         Address address = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid address Id:" + id));
         repository.delete(address);
+
         return "redirect:/addresses";
     }
 
@@ -144,11 +148,18 @@ public class AddressWebController {
 
         List<Address> addressListOfUser = user.getAddressList();
 
-        if(addressListOfUser.size() == 0 ){
-            return new RedirectView("/nodata/" +id);
+        if (addressListOfUser == null) {
+            List<Address> addressList = new ArrayList<>();
+            user.setAddressList(addressList);
+            userRepository.save(user);
+            return new RedirectView("/nodata/" + id);
         }
-        else if (addressListOfUser.size() == 1 && addressListOfUser == null) {
-            return new RedirectView("/nodata/" +id);
+           else if (addressListOfUser.size() == 1 && addressListOfUser.get(0) == null) {
+            return new RedirectView("/nodata/" + id);
+        }
+
+               else if (addressListOfUser.size() == 0) {
+                return new RedirectView("/nodata/" +id);
 
         }
 
